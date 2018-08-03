@@ -9,6 +9,6 @@
 			"usb": "kmod-usb-storage kmod-usb-uhci kmod-usb2 kmod-usb-ohci kmod-usb-acm kmod-usb-net-huawei-cdc-ncm comgt chat comgt-directip comgt-ncm kmod-usb-serial kmod-usb-serial-cp210x kmod-usb-serial-option kmod-usb-serial-wwan kmod-usb-serial-sierrawireless kmod-rt2800-usb usb-modeswitch kmod-mppe kmod-usb-net kmod-usb-net-cdc-ether kmod-usb-net-rndis kmod-usb-net-qmi-wwan uqmi kmod-usb-net-ipheth libusbmuxd libimobiledevice usbmuxd",
 			"glinet": "gl-base-files gl-files-brower gl-firewall gl-mem-monitor gl-modem gl-repeater gl-sdk gl-software gl-ss gl-ss-server gl-ui gl-util gl-vpn gl-vpn-server gl-wan-detect gl-wg gl-wg-server gl-wifi-core"
 		},
-		"GL-AR750S": "kmod-fast-classifier kmod-shortcut-fe ar750-sta-watch"
+		"GL-AR750S": "-gl-ss -gl-ss-server kmod-fast-classifier kmod-shortcut-fe ar750-sta-watch"
 	}
 }
