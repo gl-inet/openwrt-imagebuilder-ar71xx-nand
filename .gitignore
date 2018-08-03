@@ -1,4 +1,7 @@
-/build_dir
+/build_dir/target-mips_24kc_musl/root*
+/build_dir/target-mips_24kc_musl/linux-ar71xx_nand/tmp
+/build_dir/target-mips_24kc_musl/linux-ar71xx_nand/*initramfs*
+/build_dir/target-mips_24kc_musl/linux-ar71xx_nand/*squashfs*
 /bin
 /dl
 *.sig
