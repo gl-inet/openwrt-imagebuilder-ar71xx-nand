@@ -97,11 +97,10 @@ tplink_pharos_check_support_list() {
 	local image="$1"
 	local offset="$2"
 	local model="$3"
-	local trargs="$4"
 
 	# Here $image is given to dd directly instead of using get_image;
 	# otherwise the skip will take almost a second (as dd can't seek)
-	dd if="$image" bs=1 skip=$offset count=1024 2>/dev/null | tr -d "$trargs" | (
+	dd if="$image" bs=1 skip=$offset count=1024 2>/dev/null | (
 		while IFS= read -r line; do
 			[ "$line" = "$model" ] && exit 0
 		done
@@ -111,19 +110,17 @@ tplink_pharos_check_support_list() {
 }
 
 tplink_pharos_check_image() {
-	local image_magic="$(get_magic_long "$1")"
-	local board_magic="$2"
-	[ "$image_magic" != "$board_magic" ] && {
-		echo "Invalid image magic '$image_magic'. Expected '$board_magic'."
+	local magic_long="$(get_magic_long "$1")"
+	[ "$magic_long" != "7f454c46" ] && {
+		echo "Invalid image magic '$magic_long'"
 		return 1
 	}
 
-	local model_string="$3"
-	local trargs="$4"
+	local model_string="$(tplink_pharos_get_model_string)"
 
 	# New images have the support list at 7802888, old ones at 1511432
-	tplink_pharos_check_support_list "$1" 7802888 "$model_string" "$trargs" || \
-	tplink_pharos_check_support_list "$1" 1511432 "$model_string" "$trargs" || {
+	tplink_pharos_check_support_list "$1" 7802888 "$model_string" || \
+	tplink_pharos_check_support_list "$1" 1511432 "$model_string" || {
 		echo "Unsupported image (model not in support-list)"
 		return 1
 	}
@@ -620,11 +617,7 @@ platform_check_image() {
 	eap120|\
 	wbs210|\
 	wbs510)
-		tplink_pharos_check_image "$1" "7f454c46" "$(tplink_pharos_get_model_string)" '' && return 0
-		return 1
-		;;
-	cpe210-v2)
-		tplink_pharos_check_image "$1" "01000000" "$(tplink_pharos_v2_get_model_string)" '\0\xff\r' && return 0
+		tplink_pharos_check_image "$1" && return 0
 		return 1
 		;;
 	a40|\

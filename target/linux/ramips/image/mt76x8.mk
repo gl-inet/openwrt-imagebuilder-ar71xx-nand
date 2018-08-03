@@ -50,13 +50,6 @@ define Device/gl-mt300n-v2
 endef
 TARGET_DEVICES += gl-mt300n-v2
 
-define Device/gl-mt300n-v3
-  DTS := GL-MT300N-V3
-  IMAGE_SIZE := $(ralink_default_fw_size_8M)
-  DEVICE_TITLE := GL-iNet GL-MT300N-V3
-endef
-TARGET_DEVICES += gl-mt300n-v3
-
 define Device/hc5661a
   DTS := HC5661A
   IMAGE_SIZE := $(ralink_default_fw_size_16M)
@@ -227,6 +220,7 @@ define Device/tplink_tl-wr902ac-v3
   TPLINK_HWREV := 0x89
   TPLINK_HWREVADD := 0x1
   TPLINK_HVERSION := 3
+  IMAGES += factory.bin
   DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-usb-ledtrig-usbport
 endef
 TARGET_DEVICES += tplink_tl-wr902ac-v3

@@ -371,20 +371,12 @@ tplink_pharos_get_model_string() {
 }
 
 tplink_pharos_board_detect() {
-	local model_string="$1"
+	local model_string="$(tplink_pharos_get_model_string | tr -d '\r')"
 	local oIFS="$IFS"; IFS=":"; set -- $model_string; IFS="$oIFS"
 
 	local model="${1%%\(*}"
 
 	AR71XX_MODEL="TP-Link $model v$2"
-}
-
-tplink_pharos_v2_get_model_string() {
-	local part
-	part=$(find_mtd_part 'product-info')
-	[ -z "$part" ] && return 1
-
-	dd if=$part bs=1 skip=4360 count=64 2>/dev/null | tr -d '\r\0' | head -n 1
 }
 
 ar71xx_board_detect() {
@@ -571,18 +563,14 @@ ar71xx_board_detect() {
 		;;
 	*"CPE210/220")
 		name="cpe210"
-		tplink_pharos_board_detect "$(tplink_pharos_get_model_string | tr -d '\r')"
-		;;
-	*"CPE210 v2")
-		name="cpe210-v2"
-		tplink_pharos_board_detect "$(tplink_pharos_v2_get_model_string)"
+		tplink_pharos_board_detect
 		;;
 	*"CPE505N")
 		name="cpe505n"
 		;;
 	*"CPE510/520")
 		name="cpe510"
-		tplink_pharos_board_detect "$(tplink_pharos_get_model_string | tr -d '\r')"
+		tplink_pharos_board_detect
 		;;
 	*"CPE830")
 		name="cpe830"
@@ -683,7 +671,7 @@ ar71xx_board_detect() {
 		;;
 	*"EAP120")
 		name="eap120"
-		tplink_pharos_board_detect "$(tplink_pharos_get_model_string | tr -d '\r')"
+		tplink_pharos_board_detect
 		;;
 	*"EAP300 v2")
 		name="eap300v2"
@@ -1382,11 +1370,11 @@ ar71xx_board_detect() {
 		;;
 	*"WBS210")
 		name="wbs210"
-		tplink_pharos_board_detect "$(tplink_pharos_get_model_string | tr -d '\r')"
+		tplink_pharos_board_detect
 		;;
 	*"WBS510")
 		name="wbs510"
-		tplink_pharos_board_detect "$(tplink_pharos_get_model_string | tr -d '\r')"
+		tplink_pharos_board_detect
 		;;
 	"WeIO"*)
 		name="weio"
